@@ -4,7 +4,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :coaches, only: [:create]
       post '/login', to: 'auth#create'
-      get '/profile', to: 'coaches#profile'
+      get '/coachprofile', to: 'coaches#profile'
+      
+      resources :players, only: [:create]
+      get '/playerprofile', to: 'players#profile'
+
     end
   end
 end
