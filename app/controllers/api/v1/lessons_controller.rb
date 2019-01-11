@@ -1,6 +1,6 @@
 class Api::V1::LessonsController < ApplicationController
   before_action :find_user
-  skip_before_action :authorized, only: [:create, :index, :update]
+  skip_before_action :authorized, only: [:create, :index, :update, :destroy]
 
   def index
     @lessons = @user.lessons
@@ -19,11 +19,21 @@ class Api::V1::LessonsController < ApplicationController
     render json: @lesson
   end
 
+  def destroy
+    @lesson = Lesson.find(params[:id])
+
+    @lesson.destroy!
+  end
+
 
   private
 
   def lesson_params
     params.require(:lesson).permit(:id, :date, :time, :player, :notes, :coach)
+  end
+
+  def destroy_params
+    params.permit(:id)
   end
 
   def find_user
