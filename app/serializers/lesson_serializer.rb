@@ -1,4 +1,5 @@
 class LessonSerializer < ActiveModel::Serializer
   attributes :id, :time, :date, :duration, :location, :coach, :player, :notes
-  belongs_to :student
+  belongs_to :coach
+  belongs_to :player
 end

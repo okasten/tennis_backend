@@ -27,7 +27,8 @@ ActiveRecord::Schema.define(version: 2019_01_10_213935) do
   end
 
   create_table "lessons", force: :cascade do |t|
-    t.bigint "student_id"
+    t.bigint "coach_id"
+    t.bigint "player_id"
     t.time "time"
     t.date "date"
     t.string "duration"
@@ -35,7 +36,8 @@ ActiveRecord::Schema.define(version: 2019_01_10_213935) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["student_id"], name: "index_lessons_on_student_id"
+    t.index ["coach_id"], name: "index_lessons_on_coach_id"
+    t.index ["player_id"], name: "index_lessons_on_player_id"
   end
 
   create_table "players", force: :cascade do |t|
@@ -51,16 +53,6 @@ ActiveRecord::Schema.define(version: 2019_01_10_213935) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "students", force: :cascade do |t|
-    t.bigint "player_id"
-    t.bigint "coach_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["coach_id"], name: "index_students_on_coach_id"
-    t.index ["player_id"], name: "index_students_on_player_id"
-  end
-
-  add_foreign_key "lessons", "students"
-  add_foreign_key "students", "coaches"
-  add_foreign_key "students", "players"
+  add_foreign_key "lessons", "coaches"
+  add_foreign_key "lessons", "players"
 end

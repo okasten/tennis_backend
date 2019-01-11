@@ -7,7 +7,6 @@ class Api::V1::LessonsController < ApplicationController
   end
 
   def create
-    # I need to create a student before I can create a lesson
     @coach_id = @user.id
     @lesson = Lesson.create(lesson_params)
     byebug
