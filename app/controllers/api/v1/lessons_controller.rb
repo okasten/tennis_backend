@@ -1,6 +1,6 @@
 class Api::V1::LessonsController < ApplicationController
   before_action :find_user
-  skip_before_action :authorized, only: [:create, :index]
+  skip_before_action :authorized, only: [:create, :index, :update]
 
   def index
     @lessons = @user.lessons
@@ -13,11 +13,17 @@ class Api::V1::LessonsController < ApplicationController
     render json: @lesson
   end
 
+  def update
+    @lesson = Lesson.find(lesson_params[:id])
+    @lesson.update(lesson_params)
+    render json: @lesson
+  end
+
 
   private
 
   def lesson_params
-    params.require(:lesson).permit(:date, :time, :player, :notes, :coach)
+    params.require(:lesson).permit(:id, :date, :time, :player, :notes, :coach)
   end
 
   def find_user
