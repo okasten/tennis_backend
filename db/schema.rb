@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 2019_01_10_213935) do
   create_table "lessons", force: :cascade do |t|
     t.bigint "coach_id"
     t.bigint "player_id"
-    t.time "time"
-    t.date "date"
+    t.string "time"
+    t.string "date"
     t.string "duration"
     t.string "location"
     t.text "notes"

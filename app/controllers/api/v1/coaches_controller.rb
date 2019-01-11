@@ -1,9 +1,13 @@
 class Api::V1::CoachesController < ApplicationController
-
-  skip_before_action :authorized, only: [:create]
+  # before_action :find_user, only: [:index]
+  skip_before_action :authorized, only: [:create, :index]
 
   def profile
     render json: {type: "coach", coach: CoachSerializer.new(current_user)}, status: :accepted
+  end
+
+  def index
+    byebug
   end
 
   def create
