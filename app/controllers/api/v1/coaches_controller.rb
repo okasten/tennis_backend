@@ -7,7 +7,8 @@ class Api::V1::CoachesController < ApplicationController
   end
 
   def index
-    byebug
+    @coaches = Coach.all
+    render json: @coaches
   end
 
   def create
