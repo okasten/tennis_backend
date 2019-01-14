@@ -7,7 +7,7 @@ Rails.application.routes.draw do
         resources :players
         resources :conversations do
           resources :messages
-        end 
+        end
       end
       post '/login', to: 'auth#create'
       get '/coachprofile', to: 'coaches#profile'
@@ -18,6 +18,10 @@ Rails.application.routes.draw do
         resources :conversations do
           resources :messages
         end
+      end
+
+      resources :conversations do
+        resources :messages
       end
       get '/playerprofile', to: 'players#profile'
 
