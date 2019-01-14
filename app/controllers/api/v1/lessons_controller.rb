@@ -15,7 +15,7 @@ class Api::V1::LessonsController < ApplicationController
 
   def update
     @lesson = Lesson.find(lesson_params[:id])
-    @lesson.update(lesson_params)
+    @lesson.update(player_id: update_params[:id])
     render json: @lesson
   end
 
@@ -27,9 +27,13 @@ class Api::V1::LessonsController < ApplicationController
 
 
   private
-
+# :id, :date, :time, :player, :notes, :coach
   def lesson_params
-    params.require(:lesson).permit(:id, :date, :time, :player, :notes, :coach)
+    params.require(:lesson).permit(:id, :player, :date, :time, :notes, :coach)
+  end
+
+  def update_params
+    params.require(:lesson).require(:player).permit(:id)
   end
 
   def destroy_params
