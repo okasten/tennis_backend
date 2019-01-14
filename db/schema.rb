@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_10_213935) do
+ActiveRecord::Schema.define(version: 2019_01_14_190920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,15 @@ ActiveRecord::Schema.define(version: 2019_01_10_213935) do
     t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "conversations", force: :cascade do |t|
+    t.bigint "player_id"
+    t.bigint "coach_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coach_id"], name: "index_conversations_on_coach_id"
+    t.index ["player_id"], name: "index_conversations_on_player_id"
   end
 
   create_table "lessons", force: :cascade do |t|
@@ -40,6 +49,20 @@ ActiveRecord::Schema.define(version: 2019_01_10_213935) do
     t.index ["player_id"], name: "index_lessons_on_player_id"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.string "time"
+    t.string "date"
+    t.string "subject"
+    t.boolean "read"
+    t.string "to"
+    t.string "from"
+    t.text "content"
+    t.bigint "conversation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.string "name"
     t.string "username"
@@ -53,6 +76,9 @@ ActiveRecord::Schema.define(version: 2019_01_10_213935) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "conversations", "coaches"
+  add_foreign_key "conversations", "players"
   add_foreign_key "lessons", "coaches"
   add_foreign_key "lessons", "players"
+  add_foreign_key "messages", "conversations"
 end

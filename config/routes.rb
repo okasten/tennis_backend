@@ -5,6 +5,9 @@ Rails.application.routes.draw do
       resources :coaches, only: [:create, :index] do
         resources :lessons
         resources :players
+        resources :conversations do
+          resources :messages
+        end 
       end
       post '/login', to: 'auth#create'
       get '/coachprofile', to: 'coaches#profile'
@@ -12,6 +15,9 @@ Rails.application.routes.draw do
       resources :players, only: [:create] do
         resources :lessons
         resources :coaches
+        resources :conversations do
+          resources :messages
+        end
       end
       get '/playerprofile', to: 'players#profile'
 
