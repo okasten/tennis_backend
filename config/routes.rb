@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       post '/login', to: 'auth#create'
       get '/coachprofile', to: 'coaches#profile'
 
-      resources :players, only: [:create] do
+      resources :players, only: [:create, :index] do
         resources :lessons
         resources :coaches
         resources :conversations do

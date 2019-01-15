@@ -1,8 +1,13 @@
 class Api::V1::PlayersController < ApplicationController
-  skip_before_action :authorized, only: [:create]
+  skip_before_action :authorized, only: [:create, :index]
 
   def profile
     render json: {type: "player", user: PlayerSerializer.new(current_user)}, status: :accepted
+  end
+
+  def index
+    @players = Player.all
+    render json: @players
   end
 
   def create
