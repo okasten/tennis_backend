@@ -15,7 +15,15 @@ class Api::V1::LessonsController < ApplicationController
 
   def update
     @lesson = Lesson.find(lesson_params[:id])
-    @lesson.update(player_id: update_params[:id])
+
+    if params[:player]
+      @lesson.update(player_id: update_params[:id])
+
+    else
+      @lesson.update(lesson_params)
+
+    end
+
     render json: @lesson
   end
 
@@ -32,9 +40,9 @@ class Api::V1::LessonsController < ApplicationController
     params.require(:lesson).permit(:id, :player, :date, :time, :notes, :coach)
   end
 
-  def update_params
-    params.require(:lesson).require(:player).permit(:id)
-  end
+  # def update_params
+  #   params.require(:lesson).require(:player).permit(:id)
+  # end
 
   def destroy_params
     params.permit(:id)
