@@ -1,9 +1,15 @@
 class Api::V1::CoachesController < ApplicationController
    before_action :find_user, only: [:update]
-  skip_before_action :authorized, only: [:create, :index, :update]
+  skip_before_action :authorized, only: [:create, :index, :update, :students]
 
   def profile
     render json: {type: "coach", user: CoachSerializer.new(current_user)}, status: :accepted
+  end
+
+  def students
+    @coach = Coach.find(params[:coach_id])
+    @students = @coach.players.uniq
+    render json: @students
   end
 
   def index

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       end
       post '/login', to: 'auth#create'
       get '/coachprofile', to: 'coaches#profile'
+      get '/coaches/:coach_id/students', to: 'coaches#students'
 
       resources :players, only: [:create, :index, :update] do
         resources :lessons
