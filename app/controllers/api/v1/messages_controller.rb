@@ -19,8 +19,8 @@ class Api::V1::MessagesController < ApplicationController
       @receier = @conversation.player
     end
     @time = Time.now().to_s.split(" ")
-    
-    @message = Message.create(conversation: @conversation, content: params[:message][:content], read: false, from: @user, to: @receiver, subject: @conversation.messages.first.subject, date: @time[0], time: @time[1])
+
+    @message = Message.create(conversation: @conversation, content: params[:message][:content], read: false, from: @user, to: @receiver, date: @time[0], time: @time[1])
 
     render json: @message
 
