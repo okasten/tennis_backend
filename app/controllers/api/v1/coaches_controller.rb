@@ -1,6 +1,6 @@
 class Api::V1::CoachesController < ApplicationController
-  # before_action :find_user, only: [:index]
-  skip_before_action :authorized, only: [:create, :index]
+   before_action :find_user, only: [:update]
+  skip_before_action :authorized, only: [:create, :index, :update]
 
   def profile
     render json: {type: "coach", user: CoachSerializer.new(current_user)}, status: :accepted
@@ -21,8 +21,22 @@ class Api::V1::CoachesController < ApplicationController
     end
   end
 
+  def update
+    @user.update(update_params)
+    render json: @user
+  end
+
   private
+
+  def update_params
+    params.require(:user).permit(:username, :name, :picture, :email)
+  end
+
   def coach_params
     params.require(:coaches).permit(:username, :password, :email, :name)
+  end
+
+  def find_user
+    @user = Coach.find(params[:id])
   end
 end
