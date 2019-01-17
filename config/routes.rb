@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       get '/coaches/:coach_id/students', to: 'coaches#students'
       get '/conversations/:id/markRead', to: 'conversations#markRead'
       get '/conversations/unreadmessages/:user_id/:type', to: "conversations#unread"
+      patch '/goals/:id', to: 'goals#update'
 
       resources :players, only: [:create, :index, :update] do
         resources :lessons
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
         resources :conversations do
           resources :messages
         end
+        resources :goals
       end
 
       resources :conversations do
