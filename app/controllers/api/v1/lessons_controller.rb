@@ -16,8 +16,8 @@ class Api::V1::LessonsController < ApplicationController
   def update
     @lesson = Lesson.find(lesson_params[:id])
 
-    if params[:player]
-      @lesson.update(player_id: update_params[:id])
+    if params[:lesson][:player]
+      @lesson.update(player_id: params[:lesson][:player][:id])
 
     else
       @lesson.update(lesson_params)
