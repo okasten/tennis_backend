@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       get '/conversations/:id/markRead', to: 'conversations#markRead'
       get '/conversations/unreadmessages/:user_id/:type', to: "conversations#unread"
       patch '/goals/:id', to: 'goals#update'
+      delete '/goals/:id', to: 'goals#delete'
 
       resources :players, only: [:create, :index, :update] do
         resources :lessons
