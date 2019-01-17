@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       get '/coachprofile', to: 'coaches#profile'
       get '/coaches/:coach_id/students', to: 'coaches#students'
       get '/conversations/:id/markRead', to: 'conversations#markRead'
+      get '/conversations/unreadmessages/:user_id/:type', to: "conversations#unread"
 
       resources :players, only: [:create, :index, :update] do
         resources :lessons

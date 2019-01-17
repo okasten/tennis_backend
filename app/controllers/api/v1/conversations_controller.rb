@@ -1,6 +1,6 @@
 class Api::V1::ConversationsController < ApplicationController
-  before_action :find_user, except: [:markRead]
-  skip_before_action :authorized, only: [:create, :index, :update, :destroy, :markRead]
+  before_action :find_user, except: [:markRead, :unread]
+  skip_before_action :authorized, only: [:create, :index, :update, :destroy, :markRead, :unread]
 
   def index
     @conversations = @user.conversations
@@ -25,6 +25,17 @@ class Api::V1::ConversationsController < ApplicationController
     @conversation = Conversation.find(params[:id])
     @conversation.messages.each{|message| message.update(read: true)}
     render json: @conversation
+  end
+
+  def unread
+    if params[:type] == "player"
+      @user = Player.find(params[:user_id])
+    else
+      @user = Coach.find(params[:user_id])
+    end
+
+    @numberUnread = @user.messages.select{ |message|  message[:read] == false}.length
+    render json: @numberUnread
   end
 
 
