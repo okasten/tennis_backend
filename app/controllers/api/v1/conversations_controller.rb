@@ -1,6 +1,6 @@
 class Api::V1::ConversationsController < ApplicationController
-  before_action :find_user
-  skip_before_action :authorized, only: [:create, :index, :update, :destroy]
+  before_action :find_user, except: [:markRead]
+  skip_before_action :authorized, only: [:create, :index, :update, :destroy, :markRead]
 
   def index
     @conversations = @user.conversations
@@ -18,6 +18,12 @@ class Api::V1::ConversationsController < ApplicationController
 
     @message = Message.create(to: @receiver, from: @user, subject: message_params[:subject], content: message_params[:content], conversation: @conversation, read: false)
 
+    render json: @conversation
+  end
+
+  def markRead
+    @conversation = Conversation.find(params[:id])
+    @conversation.messages.each{|message| message.update(read: true)}
     render json: @conversation
   end
 
