@@ -14,13 +14,13 @@ class Api::V1::MessagesController < ApplicationController
     @conversation = Conversation.find(get_conversation)
 
     if @user == @conversation.player
-      @receiver = @conversation.coach
+      @receiver = @conversation.coach.name
     else
-      @receier = @conversation.player
+      @receier = @conversation.player.name
     end
     @time = Time.now().to_s.split(" ")
 
-    @message = Message.create(conversation: @conversation, content: params[:message][:content], read: false, from: @user, to: @receiver, date: @time[0], time: @time[1])
+    @message = Message.create(conversation: @conversation, content: params[:message][:content], read: false, from: @user.name, to: @receiver, date: @time[0], time: @time[1])
 
     render json: @message
 
