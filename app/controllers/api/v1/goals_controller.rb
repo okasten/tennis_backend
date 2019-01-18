@@ -1,10 +1,16 @@
 class Api::V1::GoalsController < ApplicationController
   before_action :find_user, only: [:create]
-  skip_before_action :authorized, only: [:create, :index, :update, :delete, :meet]
+  skip_before_action :authorized, only: [:create, :index, :update, :delete, :meet, :usergoals]
 
   def index
     @goal = Goal.find(params[:id])
     render json: @goal
+  end
+
+  def usergoals
+    @user = Player.find(params[:id])
+    @goals = @user.goals
+    render json: @goals
   end
 
   def create

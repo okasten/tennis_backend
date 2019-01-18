@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       delete '/goals/:id', to: 'goals#delete'
       patch '/goals/:id/meet', to: 'goals#meet'
       get '/goals/:id', to: 'goals#index'
+      get '/usergoals/:id', to: 'goals#usergoals'
 
       resources :players, only: [:create, :index, :update] do
         resources :lessons
