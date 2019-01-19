@@ -4,6 +4,7 @@ class Api::V1::LessonsController < ApplicationController
 
   def index
     @lessons = @user.lessons
+
     render json: @lessons
   end
 
