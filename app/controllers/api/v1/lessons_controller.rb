@@ -1,11 +1,17 @@
 class Api::V1::LessonsController < ApplicationController
-  before_action :find_user
-  skip_before_action :authorized, only: [:create, :index, :update, :destroy]
+  before_action :find_user, except: [:addNotes]
+  skip_before_action :authorized, only: [:create, :index, :update, :destroy, :addNotes]
 
   def index
     @lessons = @user.lessons
 
     render json: @lessons
+  end
+
+  def addNotes
+    @lesson = Lesson.find(params[:id])
+    @lesson.update(notes: params[:notes])
+    render json: @lesson
   end
 
   def create
