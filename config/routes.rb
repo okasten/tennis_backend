@@ -20,7 +20,7 @@ Rails.application.routes.draw do
       get '/goals/:id', to: 'goals#index'
       get '/usergoals/:id', to: 'goals#usergoals'
       patch '/lessons/:id/addNotes', to: 'lessons#addNotes'
-
+      patch '/lessons/:id/book', to: 'lessons#book'
       resources :players, only: [:create, :index, :update] do
         resources :lessons
         resources :coaches

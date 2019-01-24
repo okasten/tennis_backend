@@ -16,7 +16,7 @@ class Api::V1::ConversationsController < ApplicationController
       @conversation = Conversation.create(player: @user, coach: @receiver)
     end
 
-    @message = Message.create(to: @receiver, from: @user, subject: message_params[:subject], content: message_params[:content], conversation: @conversation, read: false)
+    @message = Message.create(to: @receiver.name, from: @user.name, subject: message_params[:subject], content: message_params[:content], conversation: @conversation, read: false)
 
     render json: @conversation
   end

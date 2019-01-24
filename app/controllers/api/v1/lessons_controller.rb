@@ -1,6 +1,6 @@
 class Api::V1::LessonsController < ApplicationController
-  before_action :find_user, except: [:addNotes]
-  skip_before_action :authorized, only: [:create, :index, :update, :destroy, :addNotes]
+  before_action :find_user, except: [:addNotes, :book]
+  skip_before_action :authorized, only: [:create, :index, :update, :destroy, :addNotes, :book]
 
   def index
     @lessons = @user.lessons
@@ -20,9 +20,14 @@ class Api::V1::LessonsController < ApplicationController
     render json: @lesson
   end
 
+  def book
+    @lesson = Lesson.find(lesson_params[:id])
+    @lesson.update(player_id: params[:lesson][:player][:id], notes: params[:lesson][:notes])
+    render json: @lesson
+  end
+
   def update
     @lesson = Lesson.find(lesson_params[:id])
-
     if params[:lesson][:player]
       @lesson.update(player_id: params[:lesson][:player][:id])
 
@@ -30,6 +35,7 @@ class Api::V1::LessonsController < ApplicationController
       @lesson.update(lesson_params)
 
     end
+
 
     render json: @lesson
   end
